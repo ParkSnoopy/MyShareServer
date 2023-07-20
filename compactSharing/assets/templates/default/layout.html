@@ -12,13 +12,13 @@
     {% block head %}
     {% endblock %}
   </head>
-  <body lang="en">
+  <body lang="en" style="overflow-x:hidden">
     <div class="row" style="height:10vh; margin-left:10vw; ">
       {% block header %}
       {% endblock %}
     </div>
-    <div id="main-container" class="container-lg pt-3" style="width:80vw; margin-left:10vw; ">
-      <div class="jumbotron text-center">
+    <div id="main-container" class="container-lg pt-3" style="margin-left:9vw; ">
+      <div class="jumbotron text-center" style="width:80vw;">
         {% block content %}
         {% endblock %}
       </div>
