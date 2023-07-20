@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     # USR APP
     'assets', 
     'localutils', 
-    'staticServer', 
+    'globalfiles', 
     
     'homepage', 
     'clipboardShare', 
@@ -95,7 +95,7 @@ WSGI_APPLICATION = 'compactSharing.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-'''
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -113,7 +113,7 @@ DATABASES = {
         'PORT': os.environ["PGPORT"],
     }
 }
-
+'''
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -149,11 +149,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_ROOT = BASE_DIR / 'assets/static/'
-STATIC_URL = '/static-server/static/'
+STATIC_ROOT = BASE_DIR / 'globalfiles/static/'
+STATIC_URL = '/globalfiles/static/'
 
-MEDIA_ROOT = BASE_DIR / 'assets/media/'
-MEDIA_URL = '/static-server/media/'
+MEDIA_ROOT = BASE_DIR / 'globalfiles/media/'
+MEDIA_URL = '/globalfiles/media/'
+
+LOGIN_URL = '/admin/login/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -179,6 +181,8 @@ FILE_UPLOAD_HANDLER = [
 
 SALT_BYTE = 32
 SALT_SEP = '::'
+
+USE_PRIFILES = os.environ['USE_PRIFILES']
 
 MY_DEFAULT_FILE_LIFETIME_IN_HOUR = 72
 

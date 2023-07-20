@@ -19,8 +19,8 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls), 
-
-    path('static-server/', include('staticServer.urls')), 
+    path('privatefiles', include('privatefiles.urls')), 
+    path('globalfiles/', include('globalfiles.urls')), 
     
     path('', include('homepage.urls')), 
     path('clipboard/', include('clipboardShare.urls')), 
