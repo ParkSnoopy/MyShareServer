@@ -1,0 +1,29 @@
+{% extends 'default/layout.html' %}
+
+
+
+{% block title %}
+<title>Clipboard Sharing</title>
+{% endblock %}
+
+
+
+{% block header %}
+<a role="button" class="btn btn-lg" style="margin-top:2vh; color:black;" href="/">❮❮ BACK</a>
+{% endblock %}
+{% block content %}
+
+<h1 style="color:slategray;">Clipboard Sharing</h1>
+<div class="row" style="height:5vh;"></div>
+
+{% for obj in objs %}
+
+<a role="button" class="btn btn-info btn-lg" href="details?id={{obj.id}}">" {{obj.title}} " - {{obj.posted_by}}</a>
+<div class="row" style="height:5vh;"></div>
+
+{% endfor %}
+
+<div class="row" style="height:5vh;"></div>
+<a role="button" class="btn btn-success btn-lg" style="scale:120%; " href="create/">CREATE NEW</a>
+
+{% endblock %}

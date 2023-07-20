@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% block title %}
+    {% endblock %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/static-server/static/favicon.ico">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type='text/css' href="/static-server/static/default/css/bootstrap.css">
+    <link rel="stylesheet" type='text/javascript' href="/static-server/static/default/js/bootstrap.min.js">
+    {% block head %}
+    {% endblock %}
+  </head>
+  <body lang="en">
+    <div class="row" style="height:10vh; margin-left:10vw; ">
+      {% block header %}
+      {% endblock %}
+    </div>
+    <div id="main-container" class="container-lg pt-3" style="width:80vw; margin-left:10vw; ">
+      <div class="jumbotron text-center">
+        {% block content %}
+        {% endblock %}
+      </div>
+    </div>
+    <div class="row" style="height:40vh"></div>
+  </body>
+</html>

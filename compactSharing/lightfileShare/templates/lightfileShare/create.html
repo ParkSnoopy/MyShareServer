@@ -1,0 +1,85 @@
+{% extends 'default/layout.html' %}
+
+
+
+{% block title %}
+<title>Public File Sharing</title>
+{% endblock %}
+
+
+
+{% block head %}
+<script type="text/javascript">
+  function filenameUpdate() {
+    const filename = document.getElementById('fileuploadForm').value.split(/(\\|\/)/g).pop();
+    document.getElementById('fileuploadIndicate').innerHTML = '<p class="text-secondary">' + filename + '</p>';
+    document.getElementById("titleForm").setAttribute("placeholder", filename)
+  }
+</script>
+{% endblock %}
+
+
+
+{% block header %}
+<a role="button" class="btn btn-lg" style="margin-top:2vh; color:black;" href="/lightfile/">❮❮ BACK</a>
+{% endblock %}
+
+
+
+{% block content %}
+<h1 style="color:gray;">New Clipboard</h1>
+<div class="row" style="height:8vh;"></div>
+
+<form method="POST" style="width:50%; margin-left:25%; scale:125%;" enctype="multipart/form-data">
+  {% csrf_token %}
+
+  <div class="form-group" style="width:40%; margin-left:30%;">
+    <label>Posted By</label>
+    <input 
+      type="text" 
+      class="form-control form-control-lg" 
+      placeholder="optional" 
+      name="posted_by"
+    >
+  </div>
+
+  <div class="form-group"  style="width:40%; margin-left:30%;">
+    <label>Password</label>
+    <input 
+      type="password" 
+      class="form-control form-control-lg" 
+      placeholder="optional, recommended" 
+      name="password"
+    >
+  </div>
+
+  <div class="form-group" style="width:60%; margin-left:20%;">
+    <label>Title</label>
+    <input 
+      id="titleForm" 
+      type="text" 
+      class="form-control form-control-lg" 
+      placeholder="" 
+      name="title"
+    >
+  </div>
+
+  <div class="form-group" style="width:60%; margin-left:20%;">
+    <label 
+      class="btn btn-success btn-lg" 
+      style="width:80%">File to Upload
+      <input id="fileuploadForm" name="file" type="file" onchange="filenameUpdate()" style="display:none;">
+    </label>
+    <div id="fileuploadIndicate"></div>
+  </div>
+  
+  <div class="row" style="height:2vh;"></div>
+
+  <div>
+    <button id="upload-btn" type="submit" class="btn btn-success" style="width:40%;">Create</button>
+  </div>
+
+</form>
+
+<div class="row" style="height:5vh;"></div>
+{% endblock %}
