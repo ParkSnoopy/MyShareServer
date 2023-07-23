@@ -5,6 +5,7 @@ from django.http import FileResponse
 APH = settings.MY_ACCESS_PERMISSION_HANDLER
 
 from localutils.hasher import my_hash, pw_check
+from localutils.filename_validator import safe_filename
 
 from .models import SecretFile
 
@@ -82,7 +83,15 @@ def lightfileshare_details_fail(request):
     if not pk:
         return redirect('/lightfile/')
     
-    return render(request, 'lightfileShare/failure.html', {'id': pk})
+    return render(
+        request, 
+        'lightfileShare/failure.html', 
+        {
+            'redirect': f'details?id={pk}', 
+            'fail_reason': 'Password Mismatch', 
+            'fail_explain': '', 
+        }
+    )
 
 def lightfileshare_create(request):
     if request.method == 'POST' and request.FILES:
@@ -94,9 +103,18 @@ def lightfileshare_create(request):
         password = request.POST.get('password')
         title = request.POST.get('title') or content.name
         
-        # with open("some/file/name.txt", "wb+") as destination:
-        #     for chunk in f.chunks():
-        #         destination.write(chunk)
+        is_safe_filename, unsafe_word = safe_filename(filename=str(content.name), is_superuser=False)
+        
+        if not is_safe_filename:
+            return render(
+                request, 
+                'lightfileShare/failure.html', 
+                {
+                    'redirect': 'create', 
+                    'fail_reason': f"filename '{content.name}' is considered an important system file", 
+                    'fail_explain': f"please consider replace '{unsafe_word}' to other common word", 
+                }
+            )
         
         if title and content:
             SecretFile.objects.create(
