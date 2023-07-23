@@ -27,7 +27,7 @@ def privatefiles(request):
    		raise Http404()
    
     if filepath.is_file():
-   		return FileResponse( open( Path( filepath ) , 'rb' ) )
+   		return FileResponse( open( filepath, 'rb' ) )
    
     if filepath.is_dir():
    		buffer = ">> ls<br><br>"

@@ -3,6 +3,7 @@ ssh
 key
 admin
 password
+passwd
 pw
 id
 sys
