@@ -20,7 +20,7 @@ def privatefiles(request):
     is_safe_filename, _ = safe_filename(filename=str(filepath), is_superuser=True)
     
     if not is_safe_filename:
-        return HttpResponse(f"Filepath '{filepath}' is considered an important system file, or unsafe url. Not available on this route.")
+        return HttpResponse("Your input filepath is considered an important system file, or unsafe url. Not available on this route.")
     
     
     if not filepath.exists():
@@ -35,4 +35,4 @@ def privatefiles(request):
    			buffer += f"{d}<br>"
    		return HttpResponse(buffer)
    
-    return HttpResponse(f"GET {filepath = }, but not existing file, nor existing directory. Please correct filepath.")
+    return HttpResponse("Input filepath not exist. Please correct filepath.")
