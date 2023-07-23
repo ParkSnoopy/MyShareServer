@@ -44,6 +44,9 @@ def clipboardshare_details(request):
         
         except SecretClipboard.DoesNotExist:
             pass
+        except:
+            pass
+    
     return redirect('/clipboard/')
 
 def clipboardshare_details_pwcheck(request):

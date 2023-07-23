@@ -45,6 +45,9 @@ def lightfileshare_details(request):
         
         except SecretFile.DoesNotExist:
             pass
+        except:
+            pass
+    
     return redirect('/lightfile/')
 
 def lightfileshare_details_pwcheck(request):
