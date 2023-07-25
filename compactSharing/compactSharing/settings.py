@@ -96,6 +96,7 @@ WSGI_APPLICATION = 'compactSharing.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 '''
+DEBUG = True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -149,11 +150,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
+STATICFILES_DIRS = [
+    # BASE_DIR / 'globalfiles/static/',
+]
+
 STATIC_ROOT = BASE_DIR / 'globalfiles/static/'
 STATIC_URL = '/globalfiles/static/'
 
 MEDIA_ROOT = BASE_DIR / 'globalfiles/media/'
 MEDIA_URL = '/globalfiles/media/'
+
+LIGHTFILE_SAVE_DIR = 'lightfile/shared/'
 
 LOGIN_URL = '/admin/login/'
 
@@ -181,6 +188,7 @@ FILE_UPLOAD_HANDLER = [
 ]
 
 
+
 SALT_BYTE = 32
 SALT_SEP = '::'
 
@@ -192,7 +200,6 @@ from localutils.permission_handler import PermissionHandler
 MY_ACCESS_PERMISSION_HANDLER = PermissionHandler(permission_lifetime_in_minute=0.05) # permission only last for 3 seconds
 
 
-LIGHTFILE_SAVE_DIR = 'lightfile/shared/'
 
 
 

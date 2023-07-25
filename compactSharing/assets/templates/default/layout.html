@@ -3,12 +3,13 @@
   <head>
     {% block title %}
     {% endblock %}
+    {% load static %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="/globalfiles/static/default/image/favicon.ico">
+    <link rel="shortcut icon" href="{% static 'default/image/favicon.ico' %}">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" type='text/css' href="/globalfiles/static/default/css/bootstrap.min.css">
-    <link rel="stylesheet" type='text/javascript' href="/globalfiles/static/default/js/bootstrap.min.js">
+    <link rel="stylesheet" type='text/css' href="{% static 'default/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type='text/javascript' href="{% static 'default/js/bootstrap.min.js' %}">
     {% block head %}
     {% endblock %}
   </head>
