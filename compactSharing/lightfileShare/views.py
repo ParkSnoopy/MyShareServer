@@ -5,7 +5,7 @@ from django.http import FileResponse
 APH = settings.MY_ACCESS_PERMISSION_HANDLER
 
 from localutils.hasher import my_hash, pw_check
-from localutils.filename_validator import safe_filename
+from localutils.filename_validator import safe_global_filename
 
 from .models import SecretFile
 
@@ -14,8 +14,6 @@ from .models import SecretFile
 
 def lightfileshare_home(request):
     
-    # print(f"{request.session.__dict__ = }")
-    # print(f"{request.session.get('session_key') = }")
     SecretFile.objects.remove_not_exist()
     SecretFile.objects.remove_expired()
     
@@ -25,7 +23,7 @@ def lightfileshare_home(request):
 
 def lightfileshare_details(request):
     if request.method == 'GET':
-        # print(f"{request.session.get('session_key') = }")
+        
         pk = request.GET.get('id')
         try:
             secretfile = SecretFile.objects.get(pk=pk)
@@ -36,7 +34,6 @@ def lightfileshare_details(request):
                     request.session.session_key, 
                     secretfile
                 )
-                # print(f"\n  {has_perm = }\n")
                 if not has_perm:
                     return redirect(f'/lightfile/details/verify?id={pk}')
             
@@ -51,7 +48,6 @@ def lightfileshare_details(request):
     return redirect('/lightfile/')
 
 def lightfileshare_details_pwcheck(request):
-    # print(f"{request.POST = } // {request.GET = }")
     
     pk = request.GET.get('id')
     if not pk:
@@ -69,7 +65,6 @@ def lightfileshare_details_pwcheck(request):
             password, 
             secretfile.password
         )
-        # print(f"\n  {is_pw_correct = }\n")
         if is_pw_correct:
             APH.set_perm(
                 request.session.session_key, 
@@ -98,17 +93,16 @@ def lightfileshare_details_fail(request):
 
 def lightfileshare_create(request):
     if request.method == 'POST' and request.FILES:
-        # print(f"{request.POST = }")
-        # print(f"{request.FILES = }")
+        
         content = request.FILES['file']
         
         posted_by = request.POST.get('posted_by') or 'anonymousUser'
         password = request.POST.get('password')
         title = request.POST.get('title') or content.name
         
-        is_safe_filename, unsafe_word = safe_filename(filename=str(content.name), is_superuser=False)
+        filename, unsafe_word = safe_global_filename(filename=str(content.name), is_superuser=False)
         
-        if not is_safe_filename:
+        if not filename:
             return render(
                 request, 
                 'lightfileShare/failure.html', 

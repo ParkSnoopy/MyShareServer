@@ -1,22 +1,23 @@
+from pathlib import Path
+
+
 UNSAFES_BASE = set(filter(bool, open('localutils/unsafes/base.txt', 'r', encoding='utf-8').read().split()))
 UNSAFES_ROOT = set(filter(bool, open('localutils/unsafes/root.txt', 'r', encoding='utf-8').read().split())) | UNSAFES_BASE
 UNSAFES_USER = set(filter(bool, open('localutils/unsafes/user.txt', 'r', encoding='utf-8').read().split())) | UNSAFES_BASE
 
-def safe_filename(filename, is_superuser=False) -> [bool, str]:
-    # print(f"filename validation start, for {filename=}; {is_superuser=}")
-    if is_superuser:
-        # print("  is superuser")
-        for unsafe in UNSAFES_ROOT:
-            # print(f"    {unsafe=}")
-            if unsafe in filename:
-                # print("      hit")
-                return False, unsafe
-        return True, ''
-    
-    # print("  not superuser")
-    for unsafe in UNSAFES_USER:
-        # print(f"    {unsafe=}")
+
+def safe_private_filename(filepath: Path) -> Path | None:
+    filename = str(filepath).lower()
+    for unsafe in UNSAFES_ROOT:
         if unsafe in filename:
-            # print("      hit")
-            return False, unsafe
-    return True, ''
+            
+            return None # unsafe hit
+    return filepath # safe pass
+
+
+def safe_global_filename(filename) -> [str|None, None|str]:
+    for unsafe in UNSAFES_USER:
+        if unsafe in filename.lower():
+            
+            return None, unsafe # unsafe hit
+    return filename, None # safe pass

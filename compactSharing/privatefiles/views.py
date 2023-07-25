@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import user_passes_test
 from django.conf import settings
 from django.http import HttpResponse, FileResponse, Http404
 
-from localutils.filename_validator import safe_filename
+from localutils.filename_validator import safe_private_filename
 
 from pathlib import Path
 
@@ -17,11 +17,10 @@ def privatefiles(request):
 
     filepath = Path( request.GET.get('filepath') )
     
-    is_safe_filename, _ = safe_filename(filename=str(filepath), is_superuser=True)
+    filepath = safe_private_filename(filepath=filepath)
     
-    if not is_safe_filename:
+    if not filepath:
         return HttpResponse("Your input filepath is considered an important system file, or unsafe url. Not available on this route.")
-    
     
     if not filepath.exists():
    		raise Http404()
