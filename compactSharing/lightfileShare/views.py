@@ -100,7 +100,7 @@ def lightfileshare_create(request):
         password = request.POST.get('password')
         title = request.POST.get('title') or content.name
         
-        filename, unsafe_word = safe_global_filename(filename=str(content.name), is_superuser=False)
+        filename, unsafe_word = safe_global_filename(filename=str(content.name))
         
         if not filename:
             return render(
