@@ -155,10 +155,6 @@ USE_TZ = True
 STATIC_ROOT = BASE_DIR / 'globalfiles/static/'
 STATIC_URL = '/globalfiles/static/'
 
-STATICFILES_DIRS = [
-    BASE_DIR / 'static/',
-]
-
 MEDIA_ROOT = BASE_DIR / 'globalfiles/media/'
 MEDIA_URL = '/globalfiles/media/'
 
