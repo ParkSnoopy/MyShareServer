@@ -96,13 +96,14 @@ WSGI_APPLICATION = 'compactSharing.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 '''
-DEBUG = True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+DEBUG = True
 '''
 DATABASES = {
     'default': {
@@ -155,7 +156,7 @@ STATIC_ROOT = BASE_DIR / 'globalfiles/static/'
 STATIC_URL = '/globalfiles/static/'
 
 STATICFILES_DIRS = [
-    BASE_DIR / 'globalfiles/static/',
+    BASE_DIR / 'static/',
 ]
 
 MEDIA_ROOT = BASE_DIR / 'globalfiles/media/'
