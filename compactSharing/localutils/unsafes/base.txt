@@ -12,16 +12,10 @@ conf
 dat
 log
 git
-dll
 iso
-doc
 txt
-zip
 sql
 html
 asp
 bak
 dbf
-pdf
-ppt
-exe
