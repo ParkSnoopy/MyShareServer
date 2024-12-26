@@ -12,10 +12,7 @@ conf
 dat
 log
 git
-iso
-txt
 sql
-html
 asp
 bak
 dbf
