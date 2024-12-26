@@ -96,7 +96,7 @@ def lightfileshare_create(request):
         
         content = request.FILES['file']
         
-        posted_by = request.POST.get('posted_by') or 'anonymousUser'
+        posted_by = request.POST.get('posted_by') or 'AnonymousUser'
         password = request.POST.get('password')
         title = request.POST.get('title') or content.name
         

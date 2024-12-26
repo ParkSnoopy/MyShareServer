@@ -26,14 +26,22 @@ class SecretFileManager(models.Manager):
                 obj.delete()
         
 
+
+
 class SecretFile(models.Model):
-    
+
+    class PrivateLevel:
+        Init = -1
+        Public = 0
+        MiddleManager = 1
+        Superuser = 2
+
+    privatelevel = models.IntegerField(blank=True, null=False, default=PrivateLevel.Init)
     password = models.CharField(blank=True, null=True, max_length=1024) # string salted+hashed by 'my_hash()'
     title = models.CharField(blank=True, null=False, default='', max_length=100)
     content = models.FileField(blank=False, null=False, upload_to=settings.LIGHTFILE_SAVE_DIR)
-    posted_by = models.CharField(blank=True, null=False, default='anonymousUser', max_length=100)
+    posted_by = models.CharField(blank=True, null=False, default='AnonymousUser', max_length=100)
     expire_at = models.DateTimeField(blank=True, null=False, default=expire_time_maker)
-    
-    
-    objects = SecretFileManager()
 
+
+    objects = SecretFileManager()
