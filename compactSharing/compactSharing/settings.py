@@ -25,16 +25,17 @@ import os
 SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.environ.get('DEBUG', False)
 
 
-CUSTOM_URL = [
-    os.environ["URL_main"], 
-    os.environ["URL_backup"], 
-]
+CUSTOM_URL = [ url for url in (
+    os.environ.get("URL_main", ""), 
+    os.environ.get("URL_backup", ""), 
+
+) if url ]
 
 ALLOWED_HOSTS = [
-    *CUSTOM_URL, 
+    *CUSTOM_URL
 ]
 
 
@@ -47,6 +48,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # CRONTAB
+    'django_celery_beat', 
     
     # USR APP
     'assets', 
@@ -59,6 +63,7 @@ INSTALLED_APPS = [
     
     # DEP REQ
     'whitenoise', 
+
 ]
 
 MIDDLEWARE = [
@@ -95,26 +100,25 @@ WSGI_APPLICATION = 'compactSharing.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-'''
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if DEBUG == 'True':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
 
-DEBUG = True
-'''
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ["DB_NAME"],
-        'USER': os.environ["DB_USER"],
-        'PASSWORD': os.environ["DB_PASSWORD"],
-        'HOST': os.environ["DB_HOST"],
-        'PORT': os.environ["DB_PORT"],
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.environ["SUPABASE_DB_NAME"],
+            'USER': os.environ["SUPABASE_USER"],
+            'PASSWORD': os.environ["SUPABASE_PASSWORD"],
+            'HOST': os.environ["SUPABASE_HOST"],
+            'PORT': os.environ["SUPABASE_DB_PORT"],
+        }
     }
-}
 
 
 # Password validation
@@ -140,11 +144,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
+USE_L10N = True
 USE_TZ = True
 
 
@@ -190,17 +192,11 @@ FILE_UPLOAD_HANDLER = [
 SALT_BYTE = 32
 SALT_SEP = '::'
 
-USE_PRIFILES = os.environ['USE_PRIFILES']
+USE_PRIFILES = False # os.environ['USE_PRIFILES']
 
 MY_DEFAULT_FILE_LIFETIME_IN_HOUR = 72
 
 from localutils.permission_handler import PermissionHandler
 MY_ACCESS_PERMISSION_HANDLER = PermissionHandler(permission_lifetime_in_minute=0.05) # permission only last for 3 seconds
-
-
-
-
-
-
 
 
