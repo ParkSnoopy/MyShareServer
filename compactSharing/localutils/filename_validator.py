@@ -1,9 +1,9 @@
 from pathlib import Path
 
-
-UNSAFES_BASE = set(filter(bool, open('localutils/unsafes/base.txt', 'r', encoding='utf-8').read().split()))
-UNSAFES_ROOT = set(filter(bool, open('localutils/unsafes/root.txt', 'r', encoding='utf-8').read().split())) | UNSAFES_BASE
-UNSAFES_USER = set(filter(bool, open('localutils/unsafes/user.txt', 'r', encoding='utf-8').read().split())) | UNSAFES_BASE
+cwd = Path(__file__).parent.parent
+UNSAFES_BASE = set(filter(bool, open(cwd/'localutils/unsafes/base.txt', 'r', encoding='utf-8').read().split()))
+UNSAFES_ROOT = set(filter(bool, open(cwd/'localutils/unsafes/root.txt', 'r', encoding='utf-8').read().split())) | UNSAFES_BASE
+UNSAFES_USER = set(filter(bool, open(cwd/'localutils/unsafes/user.txt', 'r', encoding='utf-8').read().split())) | UNSAFES_BASE
 
 
 def safe_private_filename(filepath: Path) -> Path | None:
